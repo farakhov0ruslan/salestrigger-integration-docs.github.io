@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SalesTrigger — Make Integration</title>
+<link rel="icon" href="salestrigger.svg" type="image/svg+xml"/>
+
+<style>
+  :root{--bg:#0b0f14;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--accent:#8b5cf6;--accent2:#22d3ee}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:var(--accent2);text-decoration:none}
+  .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 auto;padding:14px 18px;border-bottom:1px solid #1f2937;background:#0a0f16}
+  .brand{font-weight:800;letter-spacing:.2px;margin-right:auto;color:white;display:flex;gap:10px;align-items:center}
+  .brand img{width:20px;height:20px}
+  .tab{padding:8px 14px;border:1px solid #222;border-radius:10px;background:#0d1420;color:#ccd6f6}
+  .tab:hover{border-color:#2c3551;background:#0f172a}
+  .active{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#021018;border-color:transparent}
+  .max{max-width:1080px;margin:0 auto;padding:32px 20px}
+  .hero{background:linear-gradient(120deg,rgba(139,92,246,.18),rgba(34,211,238,.14));border:1px solid #1f2937;border-radius:18px;padding:24px 20px;margin:24px 0}
+  h1{font-size:36px;margin:0 0 6px}
+  h2{font-size:26px;margin-top:30px}
+  .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:18px 16px;margin:16px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .step{display:flex;gap:12px;align-items:flex-start}
+  .num{min-width:28px;height:28px;display:inline-grid;place-items:center;border-radius:8px;background:linear-gradient(120deg,var(--accent),var(--accent2));color:#020617;font-weight:800}
+  img{max-width:100%;height:auto;border-radius:12px;border:1px solid #1f2937}
+  code{background:#0b1220;padding:2px 6px;border-radius:6px;border:1px solid #1f2937}
+  .muted{color:var(--muted);font-size:14px}
+  .footer{margin-top:28px;color:#94a3b8;font-size:13px}
+  .two-col{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+  @media (max-width: 900px){ .two-col{grid-template-columns:1fr} }
+</style>
+
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand"><img src="salestrigger.svg" alt="logo"/>SalesTrigger Docs</div>
+  <a class="tab" href="index.html">Home</a>
+  <a class="tab" href="n8n.html">n8n</a>
+  <a class="tab active" href="make.html">Make</a>
+  <a class="tab" href="api.html">API</a>
+</nav>
+
+<section class="max">
+  <div class="hero">
+    <h1>Make Integration</h1>
+    <p class="muted">Paste your existing Make guide here. The layout below mirrors n8n and leaves extended space for screenshots.</p>
+  </div>
+	<h2>Scenario walkthrough</h2>
+	
+	<!-- 1) Connection -->
+	<div class="card">
+		<div class="step" style="margin-bottom:10px;">
+			<div class="num">1</div>
+			<div>
+				<b>Connect the integration</b>
+				<p class="muted" style="margin:6px 0 0;">
+					Add a new <b>Connection</b> to SalesTrigger and paste your API token. Save and verify the connection.
+					(In Make, connections are created from the module dialog and can be reused across scenarios.)
+				</p>
+			</div>
+		</div>
+		
+		<ol style="margin:10px 0 0 20px;">
+			<li>Open your Make scenario and add the <b>SalesTrigger</b> module.</li>
+			<li>Click <b>Add</b> next to <b>Connection</b>, name it, and paste the API token.</li>
+			<li>Click <b>Save</b> and then <b>Verify</b>. You should see a success indicator.</li>
+		</ol>
+		<img src="photo5.jpg" alt="Connection">
+		
+		<div class="muted" style="margin-top:12px;">
+			Tip: Connections in Make are saved for future use and can be managed from the <i>Connections</i> section. :contentReference[oaicite:1]{index=1}
+		</div>
+	</div>
+	
+	<!-- 2) Add Lead to an API Campaign -->
+	<div class="card">
+		<div class="step" style="margin-bottom:10px;">
+			<div class="num">2</div>
+			<div>
+				<b>Module: <em>Add Lead to an API Campaign</em></b>
+				<p class="muted" style="margin:6px 0 0;">
+					Send a LinkedIn profile into a specific campaign and optionally attach up to ten predefined messages.
+				</p>
+			</div>
+		</div>
+		
+		<ul style="margin:8px 0 0 18px;">
+			<li>Select the <b>Campaign</b> you created for API uploads.</li>
+			<li>Paste a valid <b>LinkedIn profile URL</b> (format <code>https://www.linkedin.com/in/&lt;PUBLIC-ID&gt;/</code>).</li>
+			<li>Fill in <b>Message 1..10</b> to set the campaign’s predefined messages (optional).</li>
+		</ul>
+		<img src="photo9.jpg" alt="add lead module">
+		
+		<div class="muted" style="margin-top:12px;">
+			Expected result on success: HTTP <code>201 Created</code> from the API; the lead becomes visible in the campaign audience shortly after processing.
+		</div>
+	</div>
+	
+	<!-- 3) Make an API Call -->
+	<div class="card">
+		<div class="step" style="margin-bottom:10px;">
+			<div class="num">3</div>
+			<div>
+				<b>Module: <em>Make an API call</em></b>
+				<p class="muted" style="margin:6px 0 0;">
+					Use Make’s universal HTTP module to call any supported SalesTrigger endpoint when you need low-level control.
+				</p>
+			</div>
+		</div>
+		
+		<ol style="margin:8px 0 0 20px;">
+			<li>Choose <b>Make an API call</b> (HTTP) and select your SalesTrigger <b>Connection</b>.</li>
+			<li>Set the <b>Method</b>, <b>URL path</b> (e.g., <code>/beta/campaign/&lt;id&gt;/api-add-lead</code>), and, if needed, <b>Query</b>/<b>Body</b>.</li>
+			<li>Optionally map fields from previous modules (e.g., lead URL) and run the module.</li>
+		</ol>
+		
+		<img src="photo10.png" alt="universal module">
+		
+		<div class="muted" style="margin-top:12px;">
+			Reference: Make’s “Make an API call” flow lets you specify method, endpoint, and params directly from the editor. :contentReference[oaicite:2]{index=2}
+		</div>
+	</div>
+
+
+  <div class="footer">Align terminology with n8n and API pages for consistency.</div>
+</section>
+</body>
+</html>
