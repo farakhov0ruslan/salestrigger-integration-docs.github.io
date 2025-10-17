@@ -1,134 +1,277 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SalesTrigger — n8n Integration</title>
-<link rel="icon" href="salestrigger.svg" type="image/svg+xml"/>
-
-<style>
-  :root{--bg:#0b0f14;--card:#111827;--muted:#94a3b8;--text:#e5e7eb;--accent:#8b5cf6;--accent2:#22d3ee}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-  a{color:var(--accent2);text-decoration:none}
-  .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 auto;padding:14px 18px;border-bottom:1px solid #1f2937;background:#0a0f16}
-  .brand{font-weight:800;letter-spacing:.2px;margin-right:auto;color:white;display:flex;gap:10px;align-items:center}
-  .brand img{width:20px;height:20px}
-  .tab{padding:8px 14px;border:1px solid #222;border-radius:10px;background:#0d1420;color:#ccd6f6}
-  .tab:hover{border-color:#2c3551;background:#0f172a}
-  .active{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#021018;border-color:transparent}
-  .max{max-width:1080px;margin:0 auto;padding:32px 20px}
-  .hero{background:linear-gradient(120deg,rgba(139,92,246,.18),rgba(34,211,238,.14));border:1px solid #1f2937;border-radius:18px;padding:24px 20px;margin:24px 0}
-  h1{font-size:36px;margin:0 0 6px}
-  h2{font-size:26px;margin-top:30px}
-  .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:18px 16px;margin:16px 0}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-  .step{display:flex;gap:12px;align-items:flex-start}
-  .num{min-width:28px;height:28px;display:inline-grid;place-items:center;border-radius:8px;background:linear-gradient(120deg,var(--accent),var(--accent2));color:#020617;font-weight:800}
-  img{max-width:100%;height:auto;border-radius:12px;border:1px solid #1f2937}
-  code{background:#0b1220;padding:2px 6px;border-radius:6px;border:1px solid #1f2937}
-  .muted{color:var(--muted);font-size:14px}
-  .footer{margin-top:28px;color:#94a3b8;font-size:13px}
-  .two-col{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
-  @media (max-width: 900px){ .two-col{grid-template-columns:1fr} }
-</style>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>SalesTrigger — n8n Integration</title>
+	<link rel="icon" href="salestrigger.svg" type="image/svg+xml"/>
+	
+	<style>
+		:root {
+			--bg: #0b0f14;
+			--card: #111827;
+			--muted: #94a3b8;
+			--text: #e5e7eb;
+			--accent: #8b5cf6;
+			--accent2: #22d3ee
+		}
+		
+		* {
+			box-sizing: border-box
+		}
+		
+		body {
+			margin: 0;
+			font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+			background: var(--bg);
+			color: var(--text);
+			line-height: 1.6
+		}
+		
+		a {
+			color: var(--accent2);
+			text-decoration: none
+		}
+		
+		.nav {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+			align-items: center;
+			margin: 0 auto;
+			padding: 14px 18px;
+			border-bottom: 1px solid #1f2937;
+			background: #0a0f16
+		}
+		
+		.brand {
+			font-weight: 800;
+			letter-spacing: .2px;
+			margin-right: auto;
+			color: white;
+			display: flex;
+			gap: 10px;
+			align-items: center
+		}
+		
+		.brand img {
+			width: 20px;
+			height: 20px
+		}
+		
+		.tab {
+			padding: 8px 14px;
+			border: 1px solid #222;
+			border-radius: 10px;
+			background: #0d1420;
+			color: #ccd6f6
+		}
+		
+		.tab:hover {
+			border-color: #2c3551;
+			background: #0f172a
+		}
+		
+		.active {
+			background: linear-gradient(120deg, var(--accent), var(--accent2));
+			color: #021018;
+			border-color: transparent
+		}
+		
+		.max {
+			max-width: 1080px;
+			margin: 0 auto;
+			padding: 32px 20px
+		}
+		
+		.hero {
+			background: linear-gradient(120deg, rgba(139, 92, 246, .18), rgba(34, 211, 238, .14));
+			border: 1px solid #1f2937;
+			border-radius: 18px;
+			padding: 24px 20px;
+			margin: 24px 0
+		}
+		
+		h1 {
+			font-size: 36px;
+			margin: 0 0 6px
+		}
+		
+		h2 {
+			font-size: 26px;
+			margin-top: 30px
+		}
+		
+		.card {
+			background: var(--card);
+			border: 1px solid #1f2937;
+			border-radius: 16px;
+			padding: 18px 16px;
+			margin: 16px 0
+		}
+		
+		.grid {
+			display: grid;
+			grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+			gap: 14px
+		}
+		
+		.step {
+			display: flex;
+			gap: 12px;
+			align-items: flex-start
+		}
+		
+		.num {
+			min-width: 28px;
+			height: 28px;
+			display: inline-grid;
+			place-items: center;
+			border-radius: 8px;
+			background: linear-gradient(120deg, var(--accent), var(--accent2));
+			color: #020617;
+			font-weight: 800
+		}
+		
+		img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 12px;
+			border: 1px solid #1f2937
+		}
+		
+		code {
+			background: #0b1220;
+			padding: 2px 6px;
+			border-radius: 6px;
+			border: 1px solid #1f2937
+		}
+		
+		.muted {
+			color: var(--muted);
+			font-size: 14px
+		}
+		
+		.footer {
+			margin-top: 28px;
+			color: #94a3b8;
+			font-size: 13px
+		}
+		
+		.two-col {
+			display: grid;
+			grid-template-columns:1.2fr 1fr;
+			gap: 16px
+		}
+		
+		@media (max-width: 900px) {
+			.two-col {
+				grid-template-columns:1fr
+			}
+		}
+	</style>
 
 </head>
 <body>
-
-<nav class="nav">
-  <div class="brand"><img src="salestrigger.svg" alt="logo"/>SalesTrigger Docs</div>
-  <a class="tab" href="index.html">Home</a>
-  <a class="tab active" href="n8n.html">n8n</a>
-  <a class="tab" href="make.html">Make</a>
-  <a class="tab" href="api.html">API</a>
-</nav>
-
-<section class="max">
-  <div class="hero">
-    <h1>n8n Integration</h1>
-    <p class="muted">Step-by-step guide mirroring the Make page. Below each step we list screenshots you should take and place into this folder.</p>
-  </div>
-
-  <h2>1) Install the node</h2>
-  <div class="card">
-    <p><b>Option A — Community Nodes (GUI):</b> Settings → <i>Community Nodes</i> → Install → enter <code>n8n-nodes-salestrigger</code>.</p>
-    <p><b>Option B — Manual (self-hosted):</b> place the built package into <code>~/.n8n/custom</code> and restart n8n.</p>
-    <ul class="muted">
-      <li><code>n8n-01-community-install.png</code> — Community nodes install dialog.</li>
-      <li><code>n8n-02-custom-folder.png</code> — <code>~/.n8n/custom</code> folder structure.</li>
-    </ul>
-    <div class="grid">
-      <img src="n8n-01-community-install.png" alt="Community nodes install (placeholder)">
-      <img src="n8n-02-custom-folder.png" alt="Custom folder (placeholder)">
-    </div>
-  </div>
-
-  <h2>2) Create “SalesTrigger API” credentials</h2>
-  <div class="card">
-    <ol>
-      <li>Open <b>Credentials</b> → <b>New</b> → choose <i>SalesTrigger API</i>.</li>
-      <li>Paste your <b>API Token</b>.</li>
-      <li>Press <b>Test</b> and ensure status is <i>Successful</i>.</li>
-    </ol>
-    <ul class="muted">
-      <li><code>n8n-03-credentials-new.png</code> — choose credential type.</li>
-      <li><code>n8n-04-credentials-filled.png</code> — form filled with token.</li>
-      <li><code>n8n-05-credentials-test-ok.png</code> — successful test.</li>
-    </ul>
-    <div class="grid">
-      <img src="n8n-03-credentials-new.png" alt="New Credentials (placeholder)">
-      <img src="n8n-04-credentials-filled.png" alt="Credentials filled (placeholder)">
-      <img src="n8n-05-credentials-test-ok.png" alt="Credentials test ok (placeholder)">
-    </div>
-  </div>
-
-  <h2>3) Build a workflow</h2>
-  <div class="card">
-    <p>Add node <b>SalesTrigger: Add Lead to Campaign</b> and configure:</p>
-    <ul>
-      <li><b>Connection</b> — pick credentials from step 2.</li>
-      <li><b>Select campaign</b> — auto-loaded list (use <i>Refresh</i> to reload).</li>
-      <li><b>Lead LinkedIn URL</b> — <code>https://www.linkedin.com/in/&lt;PUBLIC-ID&gt;/</code>.</li>
-      <li><b>Message 1..10</b> — optional; mapped to <code>custom_field_1..10</code>.</li>
-    </ul>
-    <ul class="muted">
-      <li><code>n8n-06-node-view.png</code> — node panel with fields.</li>
-      <li><code>n8n-07-campaign-dropdown.png</code> — campaign dropdown.</li>
-      <li><code>n8n-07b-parameter-mapping.png</code> — example of mapping messages.</li>
-    </ul>
-    <div class="grid">
-      <img src="n8n-06-node-view.png" alt="Node view (placeholder)">
-      <img src="n8n-07-campaign-dropdown.png" alt="Campaign dropdown (placeholder)">
-      <img src="n8n-07b-parameter-mapping.png" alt="Parameter mapping (placeholder)">
-    </div>
-  </div>
-
-  <h2>4) Run & observe</h2>
-  <div class="card">
-    <p>Click <b>Execute node</b>. On success the API returns <code>201 Created</code> with an empty body. Errors (e.g., <code>422</code> on invalid URL) are displayed in the UI. Enable <b>Continue On Fail</b> to keep processing the next items.</p>
-    <ul class="muted">
-      <li><code>n8n-08-execute-ok.png</code> — successful run.</li>
-      <li><code>n8n-09-error-422.png</code> — example error.</li>
-      <li><code>n8n-10-continue-on-fail.png</code> — Continue On Fail option.</li>
-    </ul>
-    <div class="grid">
-      <img src="n8n-08-execute-ok.png" alt="Execute OK (placeholder)">
-      <img src="n8n-09-error-422.png" alt="422 error (placeholder)">
-      <img src="n8n-10-continue-on-fail.png" alt="Continue on fail (placeholder)">
-    </div>
-  </div>
-
-  <h2>Notes</h2>
-  <div class="card">
-    <ul>
-      <li><b>Install via GUI or manually.</b> See n8n docs for Community Nodes installation.</li>
-      <li><b>Logging:</b> set <code>N8N_LOG_LEVEL=debug</code> for deeper troubleshooting.</li>
-      <li><b>Batching:</b> one request per input item; use “Split in Batches” for rate limits.</li>
-    </ul>
-  </div>
-
-  <div class="footer">Once done, continue with <a href="make.html">Make</a> or consult the <a href="api.html">API</a>.</div>
-</section>
+	
+	<nav class="nav">
+		<div class="brand"><img src="salestrigger.svg" alt="logo"/>SalesTrigger Docs</div>
+		<a class="tab" href="index.html">Home</a>
+		<a class="tab active" href="n8n.html">n8n</a>
+		<a class="tab" href="make.html">Make</a>
+		<a class="tab" href="api.html">API</a>
+	</nav>
+	
+	<section class="max">
+		<div class="hero">
+			<h1>n8n Integration</h1>
+			<p class="muted">Step-by-step guide mirroring the Make page. Below each step we list
+				screenshots you should take and place into this folder.</p>
+		</div>
+		
+		<h2>1) Install the node</h2>
+		<div class="card">
+			<p><b>Option A — Community Nodes (GUI):</b> Settings → <i>Community Nodes</i> → Install
+				→ enter <code>n8n-nodes-salestrigger</code>.</p>
+			<p><b>Option B — Manual / Self-hosted installation:</b></p>
+			<p>If you're running n8n on your own infrastructure (e.g. VM, server, or Docker), you
+				can install your custom node manually:</p>
+			<ol>
+				<li>Create a folder <code>~/.n8n/nodes</code> in your n8n user directory (if it
+					doesn’t already exist).
+				</li>
+				<li>Navigate into it: <code>cd ~/.n8n/nodes</code>.</li>
+				<li>Install your package from npm: <code>npm install n8n-nodes-sales-trigger</code>.
+				</li>
+				<li>Restart n8n. After restart the new node should appear in the UI.</li>
+			</ol>
+			<p class="muted">Note: When running n8n in **queue mode**, the GUI install method is
+				disabled and manual installation into <code>~/.n8n/nodes</code> is required. <a
+						href="https://docs.n8n.io/integrations/community-nodes/installation/manual-install/">See
+					docs</a>.</p>
+			<p>Find module</p>
+			<div class="grid">
+				<img src="n8n-01-find-module.png" alt="New Credentials (placeholder)">
+			</div>
+		</div>
+		
+		<h2>2) Create “SalesTrigger API” credentials</h2>
+		<div class="card">
+			<ol>
+				<li>Open <b>Credentials</b> → <b>New</b> → choose <i>SalesTrigger API</i>.</li>
+				<li>Paste your <b>API Token</b>.</li>
+				<li>Press <b>Save</b> and ensure status is <i>Successful</i>.</li>
+			</ol>
+			<div class="grid">
+				<img src="n8n-02-cred.png" alt="New Credentials (placeholder)">
+				<img src="n8n-03-cred-suc.png" alt="Credentials succes)">
+			</div>
+		</div>
+		
+		<h2>3) Build a workflow</h2>
+		<div class="card">
+			<p>Add node <b>SalesTrigger: Add Lead to Campaign</b> and configure:</p>
+			<ul>
+				<li><b>Connection</b> — pick credentials from step 2.</li>
+				<li><b>Select campaign</b> — auto-loaded list (use <i>Refresh</i> to reload).</li>
+				<li><b>Lead LinkedIn URL</b> —
+					<code>https://www.linkedin.com/in/&lt;PUBLIC-ID&gt;/</code>.
+				</li>
+				<li><b>Message 1..10</b> — optional; mapped to <code>custom_field_1..10</code>.</li>
+				<li><p>If all message is empty, then u linkedin sent only connection</p></li>
+			</ul>
+			
+			<div class="grid">
+				<img src="n8n-04.png" alt="Node view (placeholder)">
+				<img src="n8n-05.png" alt="Campaign dropdown (placeholder)">
+			</div>
+		</div>
+		
+		<h2>4) Run & observe</h2>
+		<div class="card">
+			<p>Click <b>Execute node</b>. On success the API returns <code>201 Created</code> with
+				an empty body. Errors (e.g., <code>422</code> on invalid URL) are displayed in the
+				UI. Enable <b>Continue On Fail</b> to keep processing the next items.</p>
+			
+		</div>
+		
+		<h2>Notes</h2>
+		<div class="card">
+			<ul>
+				<li><b>Install via GUI or manually.</b> See n8n docs for Community Nodes
+					installation.
+				</li>
+				<li><b>Logging:</b> set <code>N8N_LOG_LEVEL=debug</code> for deeper troubleshooting.
+				</li>
+				<li><b>Batching:</b> one request per input item; use “Split in Batches” for rate
+					limits.
+				</li>
+			</ul>
+		</div>
+		
+		<div class="footer">Once done, continue with <a href="make.html">Make</a> or consult the <a
+				href="api.html">API</a>.
+		</div>
+	</section>
 </body>
 </html>
